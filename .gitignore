@@ -1,0 +1,55 @@
+# General
+node_modules/
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+dist/
+build/
+out/
+.DS_Store
+.env
+.env.*
+*.local
+.vscode/
+.idea/
+coverage/
+*.log
+*.tsbuildinfo
+tmp/
+temp/
+.cache/
+
+# Rust
+/target/
+**/*.rs.bk
+Cargo.lock
+
+# Next.js
+.next/
+.next/cache/
+.vercel/
+out/
+*.next
+
+# TypeScript
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+logs/**/*.log
+
+# OS
+Thumbs.db
+ehthumbs.db
+*.swp
+.swp
+*.swo
+
+# Miscellaneous
+.parcel-cache/
+storybook-static/
+*.pem
+*.key
+*.crt
