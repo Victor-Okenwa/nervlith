@@ -1,4 +1,3 @@
-/* eslint-disable*/
 "use client";
 
 import { ccc } from "@ckb-ccc/connector-react";
