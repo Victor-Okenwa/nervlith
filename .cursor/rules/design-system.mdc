@@ -1,0 +1,27 @@
+---
+description: Nervlith charcoal and orange design tokens
+globs: frontend/**/*.{tsx,css}
+alwaysApply: false
+---
+
+# Design system
+
+Dark charcoal is the default. Use semantic tokens, not raw hex, unless no token exists.
+
+- `bg-background` / `text-foreground` — canvas and body (`#0B0B0D` / `#F8FAFC`)
+- `bg-card` — panels (`#1F2937`)
+- `text-muted-foreground` — secondary text (`#6B7280`)
+- `bg-primary` / `text-primary` / `ring` — actions, active state, focus (`#FF7A1A`)
+
+Orange is for buttons, links, focus, and small highlights. Do not fill large surfaces with it.
+
+Headings use `font-display` (Space Grotesk). Body stays `font-sans` (Inter).
+
+```tsx
+// BAD
+<button className="bg-[#FF7A1A] text-white">Join</button>
+
+// GOOD
+<button className="bg-primary text-primary-foreground">Join</button>
+<h1 className="font-display text-foreground">Build</h1>
+```

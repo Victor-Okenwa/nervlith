@@ -1,0 +1,18 @@
+---
+description: Nervlith product context and hard constraints
+alwaysApply: true
+---
+
+# Nervlith
+
+Tagline: Build · Govern · Belong. A CKB-native DAO launcher. Users set a gate fee and a governance model, then members pay the fee and receive a membership card rendered client-side from on-chain metadata.
+
+Identity is DID:CKB through `@ckb-ccc/did-ckb` (create, resolve, profile, rotate, deactivate, migrate from did:plc). Democracy and Legislative voting use independent intent cells; the app aggregates them. Models: Autocracy (owner), Democracy (one-token-one-vote), Legislative (elected council). Reputation claims are later.
+
+Constraints:
+
+- Contracts are `no_std` Rust on `ckb-std`. No `std`, no C unless asked.
+- Every transaction declares `cellDeps` for the scripts it uses.
+- Use the same witness slots (such as `input_type`) in Rust and TypeScript.
+- UI feels like a modern SaaS app. Dark charcoal by default, orange for actions. Follow the design-system rule.
+- Split work across modules. Do not put a feature in one file.

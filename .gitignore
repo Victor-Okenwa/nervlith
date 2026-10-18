@@ -54,3 +54,5 @@ storybook-static/
 *.key
 *.crt
 *.Identifier
+
+.pnpm-store/

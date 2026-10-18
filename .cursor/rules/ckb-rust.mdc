@@ -1,0 +1,28 @@
+---
+description: CKB Rust script structure, comments, and cell-model checks
+globs: nervlith-contract/**/*.rs
+alwaysApply: false
+---
+
+# CKB Rust
+
+Toolchain, molecule, binary size, and `make build` / `make test` live in `nervlith-contract/AGENTS.md`. Follow that file. Do not restate it here.
+
+## Shape
+
+Keep `main` thin: load the script group, dispatch, return. Put errors, molecule types, and validation in their own modules (`error.rs`, `types`, `validate`). One check per function.
+
+Prefer `ckb_std::high_level` and `ckb-types`. Drop to raw syscalls only when high-level cannot express the read.
+
+## Comments
+
+Explain the cell-model reason: which cells, which witness slot, and what a missing input means. Do not restate the syntax.
+
+```rust
+// BAD: read the first input
+let input = load_cell(0, Source::Input)?;
+
+// GOOD: the membership lock only unlocks when the fee xUDT
+// is an input. A missing type match means the spender is not a member.
+let membership = find_xudt(args.token_hash, Source::Input)?;
+```

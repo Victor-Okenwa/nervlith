@@ -1,0 +1,25 @@
+---
+description: TypeScript and CCC conventions for the Nervlith frontend
+globs: frontend/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# TypeScript and CCC
+
+Add `"use client"` only on files that touch CCC, wallet state, or browser APIs. Keep server components as the default.
+
+Split by domain instead of growing one page:
+
+- UI in `components/identity`, `components/dao`, `components/membership`, `components/governance`
+- Transaction builders in `lib/ckb/`
+- One component or builder per file
+
+When TypeScript mirrors a Rust script, comment capacity, `cellDeps`, and the witness slot next to the builder so the two sides stay aligned.
+
+```tsx
+// WitnessArgs.input_type matches the script's input_type slot.
+// cellDeps must include the community type script deployed on this network.
+const witness = buildMembershipWitness(card)
+```
+
+Do not construct transactions inside presentational components.
