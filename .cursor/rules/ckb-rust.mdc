@@ -10,19 +10,22 @@ Toolchain, molecule, binary size, and `make build` / `make test` live in `nervli
 
 ## Shape
 
-Keep `main` thin: load the script group, dispatch, return. Put errors, molecule types, and validation in their own modules (`error.rs`, `types`, `validate`). One check per function.
+Keep `main` thin: load the script group, dispatch, return. Put errors, molecule types, and each validation in its own module (`error.rs`, `types`, `validate`). One check per function.
 
 Prefer `ckb_std::high_level` and `ckb-types`. Drop to raw syscalls only when high-level cannot express the read.
 
+Votes are independent intent cells. A tally reads them. It does not require the voter’s signature again.
+
 ## Comments
 
-Explain the cell-model reason: which cells, which witness slot, and what a missing input means. Do not restate the syntax.
+Comment every validation and every witness read. Say which cells, which witness slot, and what failure means on chain. Skip comments that only restate Rust syntax.
 
 ```rust
-// BAD: read the first input
+// BAD: load input zero
 let input = load_cell(0, Source::Input)?;
 
-// GOOD: the membership lock only unlocks when the fee xUDT
-// is an input. A missing type match means the spender is not a member.
+// GOOD: the membership lock unlocks only when the gate-fee xUDT
+// is an input. No matching type means the spender is not a member.
+// WitnessArgs.input_type carries the card metadata commitment.
 let membership = find_xudt(args.token_hash, Source::Input)?;
 ```

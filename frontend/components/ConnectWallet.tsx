@@ -1,69 +1,52 @@
-/* eslint-disable*/
 "use client"
 
-import React, { useEffect, useState } from "react";
-import { ccc } from "@ckb-ccc/connector-react";
-import { truncateAddress } from "@/utils/stringUtils";
+import {
+  ConnectWallet as CkbConnectWallet,
+  ConnectWalletButton,
+  ConnectWalletInfoAddress,
+  ConnectWalletInfoBalance,
+  ConnectWalletInfoContainer,
+  ConnectWalletInfoImage,
+} from "ckb-connect-wallet-kit"
+import { cn } from "cn"
 
-const ConnectWallet: React.FC = () => {
-  const { open, wallet } = ccc.useCcc();
-  const [balance, setBalance] = useState<string>("");
-  const [address, setAddress] = useState<string>("");
-  const signer = ccc.useSigner();
+const buttonSurface =
+  "rounded-2xl border border-transparent bg-primary font-medium text-primary-foreground shadow-[0_0_24px_color-mix(in_srgb,var(--primary)_35%,transparent)] hover:bg-primary/80 hover:opacity-100 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/80"
 
-  useEffect(() => {
-    if (!window) {
-      return
-    }
-
-    if (!signer) {
-      return;
-    }
-
-    (async () => {
-      const addr = await signer.getRecommendedAddress();
-      setAddress(addr);
-    })();
-
-    (async () => {
-      const capacity = await signer.getBalance();
-      setBalance(ccc.fixedPointToString(capacity));
-    })();
-
-    return () => {
-
-    };
-  }, [signer]);
-
-  const renderConnectWalletBtn = () => {
-    return <div className="cursor-pointer rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base font-bold h-10 sm:h-12 px-4 sm:px-5"
-      onClick={open} >
-      Connect Wallet
-    </div>
-  }
-
-  const renderConnectedWalletInfo = () => {
-    return <div className="cursor-pointer rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-      onClick={open} >
-      <div className="rounded-full mr-2">
-        {wallet && <img src={wallet.icon} alt="avatar" className="w-6 h-6" />}
-      </div>
-      <div>
-        <h2 className="text-sm font-semibold">
-          {balance} CKB
-        </h2>
-        <p className="text-xs flex items-center gap-2">
-          {truncateAddress(address, 10, 6)}
-        </p>
-      </div>
-    </div>
-  }
+export default function ConnectWallet({
+  size = "default",
+}: {
+  size?: "default" | "lg"
+}) {
+  const sizing =
+    size === "lg"
+      ? "h-9 px-4 py-0 text-sm sm:text-sm"
+      : "h-8 px-3 py-0 text-sm sm:text-sm"
 
   return (
-    <div className="flex">
-      {wallet ? renderConnectedWalletInfo() : renderConnectWalletBtn()}
-    </div>
-  );
-};
-
-export default ConnectWallet;
+    <CkbConnectWallet>
+      <ConnectWalletButton className={cn(buttonSurface, sizing)} />
+      <ConnectWalletInfoContainer
+        className={cn(
+          "flex items-center gap-2 rounded-2xl border border-border bg-secondary font-medium text-secondary-foreground hover:opacity-100 dark:bg-secondary dark:text-secondary-foreground",
+          sizing,
+          "pr-3"
+        )}
+      >
+        <ConnectWalletInfoImage className="size-5 rounded-full" />
+        <span className="flex flex-col items-start leading-tight">
+          <ConnectWalletInfoBalance
+            decimalPlaces={4}
+            withCurrency
+            className="text-xs font-semibold"
+          />
+          <ConnectWalletInfoAddress
+            frontChars={10}
+            endChars={6}
+            className="text-[10px] font-normal text-muted-foreground"
+          />
+        </span>
+      </ConnectWalletInfoContainer>
+    </CkbConnectWallet>
+  )
+}

@@ -5,14 +5,24 @@ alwaysApply: true
 
 # Nervlith
 
-Tagline: Build · Govern · Belong. A CKB-native DAO launcher. Users set a gate fee and a governance model, then members pay the fee and receive a membership card rendered client-side from on-chain metadata.
+Tagline: Build · Govern · Belong. A CKB-native DAO launcher that replaces a centralized forum with cells the chain can verify.
 
-Identity is DID:CKB through `@ckb-ccc/did-ckb` (create, resolve, profile, rotate, deactivate, migrate from did:plc). Democracy and Legislative voting use independent intent cells; the app aggregates them. Models: Autocracy (owner), Democracy (one-token-one-vote), Legislative (elected council). Reputation claims are later.
+A community is a gate fee plus a governance model. Paying the fee mints a membership card. The card is rendered in the browser from on-chain metadata. It is not an image stored on a server.
+
+Identity is DID:CKB via `@ckb-ccc/did-ckb` (create, resolve, profile, rotate, deactivate, migrate from did:plc). That DID is the passport across communities.
+
+Governance:
+
+- Autocracy: the owner decides.
+- Democracy: one membership, one vote. Anyone may propose. The owner can be voted out.
+- Legislative: members elect a council; the council votes between elections.
+- Democracy and Legislative use independent intent cells (AnihDev’s pattern). The app aggregates them. Do not put every vote in one mutable cell.
+- Reputation claims on the DID come later. Do not build them yet.
 
 Constraints:
 
 - Contracts are `no_std` Rust on `ckb-std`. No `std`, no C unless asked.
 - Every transaction declares `cellDeps` for the scripts it uses.
 - Use the same witness slots (such as `input_type`) in Rust and TypeScript.
-- UI feels like a modern SaaS app. Dark charcoal by default, orange for actions. Follow the design-system rule.
-- Split work across modules. Do not put a feature in one file.
+- The UI is a dark SaaS shell with a restrained cyberpunk signal: charcoal canvas, orange only for actions and glow. Follow the design-system rule.
+- Split a feature across modules. One component, builder, or validation per file. Do not grow a page or a `main` into the whole feature.

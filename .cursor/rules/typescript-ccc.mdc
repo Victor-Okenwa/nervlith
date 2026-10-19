@@ -6,15 +6,19 @@ alwaysApply: false
 
 # TypeScript and CCC
 
-Add `"use client"` only on files that touch CCC, wallet state, or browser APIs. Keep server components as the default.
+Add `"use client"` only on files that touch CCC, the wallet, or browser APIs. Server components stay the default.
 
-Split by domain instead of growing one page:
+Split by domain. One component or one transaction builder per file:
 
-- UI in `components/identity`, `components/dao`, `components/membership`, `components/governance`
-- Transaction builders in `lib/ckb/`
-- One component or builder per file
+- `components/identity` — DID create, resolve, profile, rotate, deactivate, did:plc migrate
+- `components/dao` — launch wizard and community shell
+- `components/membership` — join flow and the client-rendered card
+- `components/governance` — proposals, intent votes, council elections
+- `lib/ckb/` — transaction builders and cell readers
 
-When TypeScript mirrors a Rust script, comment capacity, `cellDeps`, and the witness slot next to the builder so the two sides stay aligned.
+Do not construct transactions inside presentational components.
+
+When TypeScript mirrors a Rust script, comment capacity, `cellDeps`, and the witness slot beside the builder so both sides stay aligned.
 
 ```tsx
 // WitnessArgs.input_type matches the script's input_type slot.
@@ -22,4 +26,4 @@ When TypeScript mirrors a Rust script, comment capacity, `cellDeps`, and the wit
 const witness = buildMembershipWitness(card)
 ```
 
-Do not construct transactions inside presentational components.
+Name functions for the chain action (`createCommunity`, `castIntent`), not for the UI step.
