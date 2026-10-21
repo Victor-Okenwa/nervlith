@@ -13,8 +13,9 @@ Split by domain. One component or one transaction builder per file:
 - `components/identity` — DID create, resolve, profile, rotate, deactivate, did:plc migrate
 - `components/dao` — launch wizard and community shell
 - `components/membership` — join flow and the client-rendered card
-- `components/governance` — proposals, intent votes, council elections
 - `lib/ckb/` — transaction builders and cell readers
+
+`components/governance` (proposals, intent votes, council elections) is Phase 4. Do not add it during the MVP.
 
 Do not construct transactions inside presentational components.
 

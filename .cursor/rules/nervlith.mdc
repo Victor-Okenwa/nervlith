@@ -11,13 +11,7 @@ A community is a gate fee plus a governance model. Paying the fee mints a member
 
 Identity is DID:CKB via `@ckb-ccc/did-ckb` (create, resolve, profile, rotate, deactivate, migrate from did:plc). That DID is the passport across communities.
 
-Governance:
-
-- Autocracy: the owner decides.
-- Democracy: one membership, one vote. Anyone may propose. The owner can be voted out.
-- Legislative: members elect a council; the council votes between elections.
-- Democracy and Legislative use independent intent cells (AnihDev’s pattern). The app aggregates them. Do not put every vote in one mutable cell.
-- Reputation claims on the DID come later. Do not build them yet.
+Build phases, the MVP boundary, and which phases are done live in the project-path rule. Follow that status list. Do not build a phase whose box is still open ahead of the current one unless asked.
 
 Constraints:
 

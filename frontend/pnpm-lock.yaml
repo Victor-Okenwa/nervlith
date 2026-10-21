@@ -15,8 +15,8 @@ importers:
         specifier: ^1.0.0
         version: 1.1.9(@types/react@19.3.0)(react@19.3.1)(typescript@5.9.3)(zod@4.6.7)
       ckb-connect-wallet-kit:
-        specifier: ^0.2.1
-        version: 0.2.1(@ckb-ccc/connector-react@1.1.9(@types/react@19.3.0)(react@19.3.1)(typescript@5.9.3)(zod@4.6.7))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: ^0.3.0
+        version: 0.3.0(@ckb-ccc/connector-react@1.1.9(@types/react@19.3.0)(react@19.3.1)(typescript@5.9.3)(zod@4.6.7))(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -1289,8 +1289,8 @@ packages:
     resolution: {integrity: sha512-7NzBL0rN6fMUW+f7A6Io4h40qQlG+xGmtMxfbnH/K7TAtt8JQWVQK+6g0UXKMeVJoyV5EkkNsErQ8pVD3bLHbA==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
 
-  ckb-connect-wallet-kit@0.2.1:
-    resolution: {integrity: sha512-qRXgyHlVlS0WpnFr1zrMe2TtkF8iKRNsrRhKrCU3IklgA1z1GqvMSbnXqagVt+DbhbHVneoxCswfbiIWDAIuWQ==}
+  ckb-connect-wallet-kit@0.3.0:
+    resolution: {integrity: sha512-TyOZo63FNc96OKkudUZazLlkyNt8RVv1x1oInvrEMaomO33Exds/NcLmaU6wm3mWDc2JqplTLGff/8mevdun/g==}
     peerDependencies:
       '@ckb-ccc/connector-react': ^1.0.0
       react: ^18.3.1
@@ -4740,7 +4740,7 @@ snapshots:
 
   chalk@5.6.2: {}
 
-  ckb-connect-wallet-kit@0.2.1(@ckb-ccc/connector-react@1.1.9(@types/react@19.3.0)(react@19.3.1)(typescript@5.9.3)(zod@4.6.7))(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
+  ckb-connect-wallet-kit@0.3.0(@ckb-ccc/connector-react@1.1.9(@types/react@19.3.0)(react@19.3.1)(typescript@5.9.3)(zod@4.6.7))(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
     dependencies:
       '@ckb-ccc/connector-react': 1.1.9(@types/react@19.3.0)(react@19.3.1)(typescript@5.9.3)(zod@4.6.7)
       clsx: 2.1.1

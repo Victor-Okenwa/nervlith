@@ -14,7 +14,7 @@ Keep `main` thin: load the script group, dispatch, return. Put errors, molecule 
 
 Prefer `ckb_std::high_level` and `ckb-types`. Drop to raw syscalls only when high-level cannot express the read.
 
-Votes are independent intent cells. A tally reads them. It does not require the voter’s signature again.
+MVP scripts are community creation and the membership lock. Proposal cells and vote cells are Phase 4. When that phase starts, votes are independent intent cells. A tally reads them and does not ask for the voter’s signature again.
 
 ## Comments
 
