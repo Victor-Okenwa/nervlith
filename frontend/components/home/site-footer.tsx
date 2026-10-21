@@ -7,7 +7,7 @@ export function SiteFooter() {
         <div className="flex items-center gap-2.5 text-sm">
           <Logo className="h-5" />
           <span className="font-display font-medium">Nervlith</span>
-          <span className="text-muted-foreground">CKB-Native</span>
+          <span className="text-muted-foreground">(formally Mint Gate)</span>
         </div>
         <p className="text-xs text-muted-foreground">
           Build · Govern · Belong
