@@ -3,8 +3,10 @@
 import type { ReactNode } from "react"
 import { ConnectWalletKitProvider } from "ckb-connect-wallet-kit"
 import { ccc } from "@ckb-ccc/connector-react"
+import { useLanguage } from "@/components/language/language-provider"
 
 export function LayoutProvider({ children }: { children: ReactNode }) {
+  const { t } = useLanguage()
   const network =
     process.env.NEXT_PUBLIC_IS_MAINNET === "true" ? "mainnet" : "testnet";
   const defaultClient = network === "mainnet"
@@ -22,7 +24,7 @@ export function LayoutProvider({ children }: { children: ReactNode }) {
       defaults={{
         buttonClassName:
           "rounded-2xl border border-transparent bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow-[0_0_24px_color-mix(in_srgb,var(--primary)_35%,transparent)] hover:bg-primary/80 hover:opacity-100 dark:border-transparent dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/80",
-        buttonLabel: "Connect Wallet",
+        buttonLabel: t.wallet.connect,
         decimalPlaces: 4,
         withCurrency: true,
         didAvatarClassName: "size-5 rounded-full object-cover",

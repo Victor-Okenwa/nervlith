@@ -5,6 +5,7 @@ import ConnectWallet from "@/components/ConnectWallet"
 import { Badge } from "@/components/ui/badge"
 import { buttonVariants } from "@/components/ui/button"
 import { HeroGrid } from "@/components/home/hero-grid"
+import { useLanguage } from "@/components/language/language-provider"
 import { cn } from "cn"
 
 const fadeUp = {
@@ -13,6 +14,8 @@ const fadeUp = {
 }
 
 export function Hero() {
+  const { t } = useLanguage()
+
   return (
     <section
       id="top"
@@ -34,14 +37,14 @@ export function Hero() {
               variant="outline"
               className="border-primary/40 bg-primary/10 text-primary"
             >
-              CKB-Native
+              {t.hero.badge}
             </Badge>
           </motion.div>
           <motion.h1
             variants={fadeUp}
             className="mt-6 font-display text-4xl font-semibold tracking-tight text-balance sm:text-6xl"
           >
-            Build. Govern. Belong.
+            {t.hero.title}
           </motion.h1>
           <motion.p
             variants={fadeUp}
@@ -49,13 +52,11 @@ export function Hero() {
           >
             Nervlith{" "}
             <span className="rounded-md bg-foreground px-1.5 py-0.5 text-sm text-background sm:text-base">
-              (formally Mint Gate)
+              {t.hero.formalName}
             </span>{" "}
-            is a{" "}
-            <span className="text-foreground">CKB-native</span> DAO launcher.
-            It replaces a centralized forum with cells the chain can verify:
-            a gate fee, a membership card, a DID passport, and votes that
-            never share a single mutable cell.
+            {t.hero.leadBefore}{" "}
+            <span className="text-foreground">{t.hero.ckbNative}</span>{" "}
+            {t.hero.leadAfter}
           </motion.p>
           <motion.div variants={fadeUp} className="mt-8 flex flex-wrap items-center gap-3">
             <ConnectWallet size="lg" />
@@ -63,14 +64,14 @@ export function Hero() {
               href="#protocol"
               className={cn(buttonVariants({ variant: "outline", size: "lg" }))}
             >
-              See the protocol
+              {t.hero.seeProtocol}
             </a>
           </motion.div>
           <motion.p
             variants={fadeUp}
             className="mt-10 font-display text-xs tracking-[0.28em] text-muted-foreground uppercase"
           >
-            On CKB · In cells · Without a server of record
+            {t.hero.kicker}
           </motion.p>
         </motion.div>
       </div>

@@ -25,27 +25,30 @@ import {
   ConnectWalletSwitchNetwork,
 } from "ckb-connect-wallet-kit"
 import { X } from "lucide-react"
+import { useLanguage } from "@/components/language/language-provider"
 
-function CloseButton() {
+function CloseButton({ label }: { label: string }) {
   return (
-    <ConnectWalletDialogClose label="Close">
+    <ConnectWalletDialogClose label={label}>
       <X className="size-4" />
     </ConnectWalletDialogClose>
   )
 }
 
 export function WalletDialog() {
+  const { t } = useLanguage()
+
   return (
     <ConnectWalletDialog>
-      <ConnectWalletDialogOverlay label="Wallet">
+      <ConnectWalletDialogOverlay label={t.wallet.dialog}>
         <ConnectWalletDialogWallets>
           <ConnectWalletDialogWalletsHeader className="flex items-center justify-between">
-            <h2 className="font-display text-base font-semibold">Connect Wallet</h2>
-            <CloseButton />
+            <h2 className="font-display text-base font-semibold">{t.wallet.connect}</h2>
+            <CloseButton label={t.wallet.close} />
           </ConnectWalletDialogWalletsHeader>
           <ConnectWalletDialogWalletList show="both" />
           <ConnectWalletDialogWalletsFooter>
-            <ConnectWalletDialogWalletsRefresh buttonText="Refresh wallets" />
+            <ConnectWalletDialogWalletsRefresh buttonText={t.wallet.refresh} />
           </ConnectWalletDialogWalletsFooter>
         </ConnectWalletDialogWallets>
         <ConnectWalletDialogSigners />
@@ -63,12 +66,12 @@ export function WalletDialog() {
                 </span>
               </span>
             </ConnectWalletDid>
-            <CloseButton />
+            <CloseButton label={t.wallet.close} />
           </ConnectWalletDialogAccountHeader>
           <ConnectWalletBalance className="font-display text-2xl" />
           <ConnectWalletDialogAccountFooter>
             <ConnectWalletSwitchNetwork />
-            <ConnectWalletDisconnect buttonText="Disconnect" />
+            <ConnectWalletDisconnect buttonText={t.wallet.disconnect} />
           </ConnectWalletDialogAccountFooter>
         </ConnectWalletDialogAccount>
       </ConnectWalletDialogOverlay>

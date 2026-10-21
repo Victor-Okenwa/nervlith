@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { LanguageProvider } from "@/components/language/language-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { LayoutProvider } from "./layoutProvider";
 
@@ -34,11 +35,13 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}
       >
-        <TooltipProvider>
-          <LayoutProvider>
-            {children}
-          </LayoutProvider>
-        </TooltipProvider>
+        <LanguageProvider>
+          <TooltipProvider>
+            <LayoutProvider>
+              {children}
+            </LayoutProvider>
+          </TooltipProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

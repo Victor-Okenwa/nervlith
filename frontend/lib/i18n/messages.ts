@@ -1,0 +1,228 @@
+const en = {
+  meta: {
+    title: "Nervlith (formally Mint Gate) — CKB-Native DAO launcher",
+  },
+  language: {
+    label: "Language",
+    english: "English",
+    chinese: "中文",
+  },
+  nav: {
+    problem: "Problem",
+    protocol: "Protocol",
+    stack: "Stack",
+    builders: "Builders",
+  },
+  hero: {
+    badge: "CKB-Native",
+    title: "Build. Govern. Belong.",
+    formalName: "(formally Mint Gate)",
+    leadBefore: "is a",
+    ckbNative: "CKB-native",
+    leadAfter:
+      "DAO launcher. It replaces a centralized forum with cells the chain can verify: a gate fee, a membership card, a DID passport, and votes that never share a single mutable cell.",
+    seeProtocol: "See the protocol",
+    kicker: "On CKB · In cells · Without a server of record",
+  },
+  problem: {
+    eyebrow: "The problem",
+    title: "DAOs should not depend on a room they do not own.",
+    body: "Nervlith exists because CKB already has the cell model for this. A community is not a website. It is a gate fee plus a governance model, written so the VM can check it.",
+    points: [
+      {
+        title: "Forums pretend to be governance",
+        body: "Membership lives in a spreadsheet. Proposals live in Discord. The chain never sees who belonged, who voted, or what passed.",
+      },
+      {
+        title: "Shared cells become bottlenecks",
+        body: "If every vote mutates one poll cell, voters race, operators gatekeep, and the history is whatever the last writer left behind.",
+      },
+      {
+        title: "Identity is rented",
+        body: "Handles on a host are not passports. Leave the forum and the name, the card, and the reputation stay with the operator.",
+      },
+    ],
+  },
+  protocol: {
+    eyebrow: "CKB-native protocol",
+    title: "A community the chain can verify.",
+    body: "Nervlith does not wrap a forum in a wallet connect button. Every join, vote, and identity change is a transaction. Cell deps, witness slots, and scripts stay aligned so TypeScript and Rust tell the same story.",
+    pillars: [
+      {
+        title: "Build",
+        body: "Launch a community as CKB cells. The owner sets a gate fee and a model: autocracy, democracy, or legislative council.",
+      },
+      {
+        title: "Govern",
+        body: "Paying the fee mints a membership card. Democracy and legislative votes are independent intent cells. The app aggregates them. Nothing shares one mutable ballot box.",
+      },
+      {
+        title: "Belong",
+        body: "The card is drawn in the browser from on-chain metadata — not an image on a host. DID:CKB is the passport that travels with you across communities.",
+      },
+    ],
+  },
+  integrations: {
+    eyebrow: "Integrations",
+    title: "Built on work already live on CKB.",
+    body: "Nervlith does not reinvent identity or voting. It composes the cell-native projects CKB builders already shipped, then adds the DAO launcher around them.",
+    patternBy: "Pattern by",
+    projects: [
+      {
+        name: "CCC",
+        title: "Common Chains Connector",
+        body: "Wallets, cells, and typed transaction builders. Nervlith speaks CKB through CCC instead of a custom RPC layer.",
+      },
+      {
+        name: "DID:CKB · Vellum",
+        title: "Identity that lives on CKB",
+        body: "Create, resolve, rotate, deactivate, and migrate from did:plc. The DID is the passport across every Nervlith community.",
+      },
+      {
+        name: "Intent-cell governance",
+        title: "Votes as independent cells",
+        body: "Democracy and legislative modes follow AnihDev’s pattern: each intent is its own cell. A tally reads them. The voter does not sign again.",
+      },
+    ],
+  },
+  builders: {
+    eyebrow: "Builders",
+    title: "Standing on cell-native work.",
+    body: "Nervlith is a launcher. The identity and governance primitives come from CKB builders who already proved the patterns on chain.",
+    roles: ["DID:CKB · Vellum", "Intent-cell governance"],
+    bios: [
+      "Reference dashboard and SDK for did:ckb — claim, resolve, profile, rotate, deactivate, and migrate from did:plc. Nervlith uses that passport as the member across communities.",
+      "CKB-native voting where each ballot is an independent intent cell, aggregated without collecting signatures again. Democracy and legislative modes in Nervlith follow this pattern.",
+    ],
+  },
+  footer: {
+    formalName: "(formally Mint Gate)",
+    tagline: "Build · Govern · Belong",
+  },
+  wallet: {
+    connect: "Connect Wallet",
+    disconnect: "Disconnect",
+    refresh: "Refresh wallets",
+    close: "Close",
+    dialog: "Wallet",
+  },
+}
+
+export type Messages = typeof en
+export type Locale = "en" | "zh"
+
+const zh: Messages = {
+  meta: {
+    title: "Nervlith（原名 Mint Gate）— CKB 原生 DAO 启动器",
+  },
+  language: {
+    label: "语言",
+    english: "English",
+    chinese: "中文",
+  },
+  nav: {
+    problem: "问题",
+    protocol: "协议",
+    stack: "技术栈",
+    builders: "建设者",
+  },
+  hero: {
+    badge: "CKB 原生",
+    title: "构建。治理。归属。",
+    formalName: "（原名 Mint Gate）",
+    leadBefore: "是一个",
+    ckbNative: "CKB 原生",
+    leadAfter:
+      "的 DAO 启动器。它用链上可以核验的 Cell 取代中心化论坛：门槛费、会员卡、DID 护照，以及互不共用同一个可变投票格的投票。",
+    seeProtocol: "查看协议",
+    kicker: "在 CKB 上 · 写在 Cell 里 · 没有中心记录服务器",
+  },
+  problem: {
+    eyebrow: "问题",
+    title: "DAO 不该依赖一间不属于自己的房间。",
+    body: "Nervlith 存在，是因为 CKB 已经有适合这件事的 Cell 模型。社区不是一个网站。它是门槛费加上治理模型，写下来让虚拟机能够核验。",
+    points: [
+      {
+        title: "论坛假装自己是治理",
+        body: "成员身份记在表格里。提案记在 Discord 里。链上看不到谁属于这里、谁投了票、什么通过了。",
+      },
+      {
+        title: "共享 Cell 会变成瓶颈",
+        body: "如果每一票都改写同一个投票 Cell，投票者就会抢跑，运营者就会把关，历史只剩下最后一次写入留下的东西。",
+      },
+      {
+        title: "身份是租来的",
+        body: "托管平台上的用户名不是护照。离开论坛，名字、会员卡和声誉都留在运营者手里。",
+      },
+    ],
+  },
+  protocol: {
+    eyebrow: "CKB 原生协议",
+    title: "一个链上可以核验的社区。",
+    body: "Nervlith 不是给论坛套一个连接钱包按钮。每一次加入、投票和身份变更都是一笔交易。Cell 依赖、见证槽和脚本保持对齐，让 TypeScript 和 Rust 讲同一个故事。",
+    pillars: [
+      {
+        title: "构建",
+        body: "把社区作为 CKB Cell 启动。所有者设定门槛费和模型：专制、民主或立法议会。",
+      },
+      {
+        title: "治理",
+        body: "支付费用会铸造一张会员卡。民主和立法投票是独立的意图 Cell。应用把它们汇总。没有任何投票共用一个可变的票箱。",
+      },
+      {
+        title: "归属",
+        body: "会员卡在浏览器里根据链上元数据绘制，而不是托管在服务器上的图片。DID:CKB 是你跨越各个社区时随身携带的护照。",
+      },
+    ],
+  },
+  integrations: {
+    eyebrow: "集成",
+    title: "建立在已经运行于 CKB 上的工作之上。",
+    body: "Nervlith 并不重新发明身份或投票。它组合 CKB 建设者已经交付的 Cell 原生项目，再在周围加上 DAO 启动器。",
+    patternBy: "模式来自",
+    projects: [
+      {
+        name: "CCC",
+        title: "通用链连接器",
+        body: "钱包、Cell 和带类型的交易构建器。Nervlith 通过 CCC 与 CKB 对话，而不是自建 RPC 层。",
+      },
+      {
+        name: "DID:CKB · Vellum",
+        title: "活在 CKB 上的身份",
+        body: "创建、解析、轮换、停用，并从 did:plc 迁移。DID 是穿越每个 Nervlith 社区的护照。",
+      },
+      {
+        name: "意图 Cell 治理",
+        title: "作为独立 Cell 的投票",
+        body: "民主和立法模式遵循 AnihDev 的模式：每个意图都是自己的 Cell。计票读取它们。投票者不必再次签名。",
+      },
+    ],
+  },
+  builders: {
+    eyebrow: "建设者",
+    title: "站在 Cell 原生的工作之上。",
+    body: "Nervlith 是一个启动器。身份和治理原语来自已经在链上证明这些模式的 CKB 建设者。",
+    roles: ["DID:CKB · Vellum", "意图 Cell 治理"],
+    bios: [
+      "did:ckb 的参考仪表盘和 SDK：声明、解析、资料、轮换、停用，并从 did:plc 迁移。Nervlith 用这本护照作为跨社区的成员身份。",
+      "CKB 原生投票，每一票都是独立的意图 Cell，汇总时不必再次收集签名。Nervlith 的民主和立法模式遵循这一模式。",
+    ],
+  },
+  footer: {
+    formalName: "（原名 Mint Gate）",
+    tagline: "构建 · 治理 · 归属",
+  },
+  wallet: {
+    connect: "连接钱包",
+    disconnect: "断开连接",
+    refresh: "刷新钱包",
+    close: "关闭",
+    dialog: "钱包",
+  },
+}
+
+export const messages: Record<Locale, Messages> = { en, zh }
+
+export function isLocale(value: string | null): value is Locale {
+  return value === "en" || value === "zh"
+}
