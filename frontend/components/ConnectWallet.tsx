@@ -2,7 +2,7 @@
 
 import {
   ConnectWalletButton,
-  ConnectWalletContainer,
+  ConnectWalletContainer
 } from "ckb-connect-wallet-kit"
 import { ConnectedAccount } from "@/components/wallet/connected-account"
 import { WalletDialog } from "@/components/wallet/wallet-dialog"

@@ -8,7 +8,7 @@ import {
   ConnectWalletDidId,
   ConnectWalletDidName,
   ConnectWalletImage,
-  useConnectWallet,
+  useConnectWallet
 } from "ckb-connect-wallet-kit"
 import { cn } from "cn"
 

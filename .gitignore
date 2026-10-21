@@ -10,6 +10,7 @@ out/
 .DS_Store
 .env
 .env.*
+!.env.example
 *.local
 .vscode/
 .idea/

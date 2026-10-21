@@ -1,6 +1,10 @@
+import { dirname } from "node:path"
+import { fileURLToPath } from "node:url"
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   turbopack: {
+    root: dirname(fileURLToPath(import.meta.url)),
     rules: {
       "*.css": {
         loaders: ["@tailwindcss/turbopack"],
@@ -8,6 +12,6 @@ const nextConfig = {
       },
     },
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig
