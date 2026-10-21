@@ -19,9 +19,9 @@ const spaceGrotesk = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Nervlith — CKB-Native DAO launcher",
+  title: "Nervlith (formally Mint Gate) — CKB-Native DAO launcher",
   description:
-    "Build · Govern · Belong. A CKB-native DAO launcher that replaces a centralized forum with cells the chain can verify.",
+    "Nervlith (formally Mint Gate). Build · Govern · Belong. A CKB-native DAO launcher that replaces a centralized forum with cells the chain can verify.",
 };
 
 export default function RootLayout({

@@ -47,7 +47,7 @@ export function Hero() {
             variants={fadeUp}
             className="mt-5 max-w-2xl text-base text-muted-foreground text-pretty sm:text-lg"
           >
-            Nervlith is a{" "}
+            Nervlith (formally Mint Gate) is a{" "}
             <span className="text-foreground">CKB-native</span> DAO launcher.
             It replaces a centralized forum with cells the chain can verify:
             a gate fee, a membership card, a DID passport, and votes that
