@@ -6,6 +6,7 @@ import { useLanguage } from "@/components/language/language-provider"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { PassportCard } from "@/components/identity/passport-card"
 import { resolveDid, type OwnedDid } from "@/lib/ckb/read-did"
 
 export function ResolveDid() {
@@ -51,13 +52,7 @@ export function ResolveDid() {
       </div>
       {error ? <p className="text-sm text-destructive">{error}</p> : null}
       {missing ? <p className="text-sm text-muted-foreground">{t.identity.notFound}</p> : null}
-      {record ? (
-        <div className="space-y-1 text-sm">
-          <p className="font-medium">{record.profile?.displayName || record.did}</p>
-          <p className="break-all text-muted-foreground">{record.did}</p>
-          {record.profile?.bio ? <p>{record.profile.bio}</p> : null}
-        </div>
-      ) : null}
+      {record ? <PassportCard record={record} /> : null}
       <Button type="submit" variant="outline" disabled={pending || !signer}>
         {pending ? t.identity.pending : t.identity.resolve}
       </Button>

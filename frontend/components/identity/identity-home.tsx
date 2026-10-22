@@ -9,6 +9,7 @@ import { EditProfile } from "@/components/identity/edit-profile"
 import { MigrateFromPlc } from "@/components/identity/migrate-from-plc"
 import { ResolveDid } from "@/components/identity/resolve-did"
 import { RotateKeys } from "@/components/identity/rotate-keys"
+import { PassportCard } from "@/components/identity/passport-card"
 import { useOwnedDid } from "@/components/identity/use-owned-did"
 import { transactionUrl } from "@/lib/ckb/transaction-url"
 
@@ -65,10 +66,10 @@ export function IdentityHome() {
       ) : null}
       {record ? (
         <div className="space-y-6">
-          <section className="max-w-xl rounded-2xl bg-card p-6">
+          <section className="max-w-xl">
             <p className="text-xs tracking-wide text-primary uppercase">{t.identity.owned}</p>
             {owned.records && owned.records.length > 1 ? (
-              <label className="mt-3 block text-sm">
+              <label className="mt-3 block max-w-sm text-sm">
                 <select
                   className="mt-1 w-full rounded-2xl border border-border bg-background px-3 py-2"
                   value={record.did}
@@ -82,31 +83,9 @@ export function IdentityHome() {
                 </select>
               </label>
             ) : null}
-            <div className="mt-4 flex items-center gap-3">
-              {record.profile?.avatar ? (
-                <span
-                  aria-hidden
-                  className="size-12 shrink-0 rounded-full bg-cover bg-center"
-                  style={{
-                    backgroundImage: `url("${record.profile.avatar.replace(/["\\\n\r]/g, "")}")`,
-                  }}
-                />
-              ) : null}
-              <div className="min-w-0">
-                <p className="font-display text-lg font-semibold">
-                  {record.profile?.displayName || record.did}
-                </p>
-                <p className="truncate text-xs text-muted-foreground">{record.did}</p>
-              </div>
+            <div className="mt-4">
+              <PassportCard record={record} />
             </div>
-            {record.profile?.bio ? (
-              <p className="mt-3 text-sm text-muted-foreground">{record.profile.bio}</p>
-            ) : null}
-            {record.localId ? (
-              <p className="mt-3 text-xs text-muted-foreground">
-                {t.identity.importedFrom} {record.localId}
-              </p>
-            ) : null}
           </section>
           <EditProfile key={record.did} record={record} onComplete={onComplete} />
           <RotateKeys record={record} onComplete={onComplete} />

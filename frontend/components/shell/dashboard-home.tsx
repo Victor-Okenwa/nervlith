@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useLanguage } from "@/components/language/language-provider"
+import { PassportCard } from "@/components/identity/passport-card"
 import { useOwnedDid } from "@/components/identity/use-owned-did"
 
 export function DashboardHome() {
@@ -19,12 +20,9 @@ export function DashboardHome() {
         <p className="mt-4 text-sm text-muted-foreground">{t.identity.loading}</p>
       ) : null}
       {record ? (
-        <div className="mt-6 rounded-2xl bg-card p-6">
-          <p className="font-display text-lg font-semibold">
-            {record.profile?.displayName || record.did}
-          </p>
-          <p className="mt-1 break-all text-xs text-muted-foreground">{record.did}</p>
-          <p className="mt-3 text-sm text-muted-foreground">{t.shell.dashboardHasDid}</p>
+        <div className="mt-6">
+          <PassportCard record={record} />
+          <p className="mt-4 text-sm text-muted-foreground">{t.shell.dashboardHasDid}</p>
         </div>
       ) : owned.signer ? (
         <p className="mt-4 text-muted-foreground">{t.shell.dashboardEmpty}</p>
