@@ -12,6 +12,8 @@ const en = {
     protocol: "Protocol",
     stack: "Stack",
     builders: "Builders",
+    menu: "Menu",
+    closeMenu: "Close menu",
   },
   shell: {
     dashboard: "Dashboard",
@@ -184,6 +186,8 @@ const zh: Messages = {
     protocol: "协议",
     stack: "技术栈",
     builders: "建设者",
+    menu: "菜单",
+    closeMenu: "关闭菜单",
   },
   shell: {
     dashboard: "仪表盘",

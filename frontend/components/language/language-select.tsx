@@ -9,8 +9,9 @@ import {
 } from "@/components/ui/select"
 import { useLanguage } from "@/components/language/language-provider"
 import { isLocale, type Locale } from "@/lib/i18n/messages"
+import { cn } from "cn"
 
-export function LanguageSelect() {
+export function LanguageSelect({ className }: { className?: string }) {
   const { locale, setLocale, t } = useLanguage()
   const items = [
     { value: "en" as const, label: t.language.english },
@@ -25,7 +26,10 @@ export function LanguageSelect() {
         if (isLocale(value)) setLocale(value)
       }}
     >
-      <SelectTrigger aria-label={t.language.label} className="w-[7.5rem]">
+      <SelectTrigger
+        aria-label={t.language.label}
+        className={cn("w-[7.5rem]", className)}
+      >
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
