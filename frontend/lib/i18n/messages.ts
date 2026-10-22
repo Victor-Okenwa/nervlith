@@ -158,6 +158,11 @@ const en = {
     refresh: "Refresh wallets",
     close: "Close",
     dialog: "Wallet",
+    didNotFound: "DID Identity not found",
+    address: "Address",
+    copyDid: "Copy DID",
+    copyAddress: "Copy address",
+    copied: "Copied",
   },
 }
 
@@ -324,6 +329,11 @@ const zh: Messages = {
     refresh: "刷新钱包",
     close: "关闭",
     dialog: "钱包",
+    didNotFound: "未找到 DID 身份",
+    address: "地址",
+    copyDid: "复制 DID",
+    copyAddress: "复制地址",
+    copied: "已复制",
   },
 }
 

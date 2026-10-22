@@ -1,7 +1,6 @@
 "use client"
 
 import {
-  ConnectWalletAddress,
   ConnectWalletBalance,
   ConnectWalletDialog,
   ConnectWalletDialogAccount,
@@ -17,15 +16,14 @@ import {
   ConnectWalletDialogWalletsHeader,
   ConnectWalletDialogWalletsRefresh,
   ConnectWalletDid,
-  ConnectWalletDidAvatar,
-  ConnectWalletDidName,
   ConnectWalletDisconnect,
   ConnectWalletImage,
   ConnectWalletName,
-  ConnectWalletSwitchNetwork,
 } from "ckb-connect-wallet-kit"
 import { X } from "lucide-react"
 import { useLanguage } from "@/components/language/language-provider"
+import { AccountAddress } from "@/components/wallet/account-address"
+import { AccountIdentity } from "@/components/wallet/account-identity"
 
 function CloseButton({ label }: { label: string }) {
   return (
@@ -55,22 +53,18 @@ export function WalletDialog() {
         <ConnectWalletDialogConnecting />
         <ConnectWalletDialogAccount className="flex flex-col gap-4">
           <ConnectWalletDialogAccountHeader>
-            <ConnectWalletDid>
-              <span className="flex min-w-0 items-center gap-2">
-                <ConnectWalletDidAvatar
-                  fallback={<ConnectWalletImage className="size-8 rounded-full" />}
-                />
-                <span className="flex min-w-0 flex-col">
-                  <ConnectWalletDidName fallback={<ConnectWalletName />} />
-                  <ConnectWalletAddress className="text-xs font-normal text-muted-foreground" />
-                </span>
-              </span>
-            </ConnectWalletDid>
+            <span className="flex min-w-0 items-center gap-2">
+              <ConnectWalletImage className="size-8 shrink-0 rounded-full object-cover" />
+              <ConnectWalletName className="truncate font-display text-base font-semibold" />
+            </span>
             <CloseButton label={t.wallet.close} />
           </ConnectWalletDialogAccountHeader>
+          <ConnectWalletDid>
+            <AccountIdentity />
+          </ConnectWalletDid>
+          <AccountAddress />
           <ConnectWalletBalance className="font-display text-2xl" />
           <ConnectWalletDialogAccountFooter>
-            <ConnectWalletSwitchNetwork />
             <ConnectWalletDisconnect buttonText={t.wallet.disconnect} />
           </ConnectWalletDialogAccountFooter>
         </ConnectWalletDialogAccount>

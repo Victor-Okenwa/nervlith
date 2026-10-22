@@ -1,52 +1,32 @@
 "use client"
 
-import {
-  ConnectWalletAddress,
-  ConnectWalletBalance,
-  ConnectWalletDid,
-  ConnectWalletDidAvatar,
-  ConnectWalletDidId,
-  ConnectWalletDidName,
-  ConnectWalletImage,
-  useConnectWallet
-} from "ckb-connect-wallet-kit"
+import { ConnectWalletDid, useConnectWallet } from "ckb-connect-wallet-kit"
 import { cn } from "cn"
+import { useLanguage } from "@/components/language/language-provider"
+import { WalletMark } from "@/components/wallet/wallet-mark"
 
 export function ConnectedAccount({ size }: { size: "default" | "lg" }) {
   const { open, wallet } = useConnectWallet()
+  const { t } = useLanguage()
 
   if (!wallet) {
     return null
   }
 
+  const mark = size === "lg" ? "size-9" : "size-8"
+
   return (
     <button
       type="button"
       onClick={() => open()}
+      aria-label={t.wallet.dialog}
       className={cn(
-        "flex items-center gap-2 rounded-2xl border border-border bg-secondary py-1 pr-3 font-medium text-secondary-foreground hover:border-primary/40 dark:bg-secondary dark:text-secondary-foreground",
-        size === "lg" ? "min-h-9 px-3" : "min-h-8 px-2"
+        "flex items-center justify-center overflow-hidden rounded-full border border-border bg-secondary hover:border-primary/40",
+        mark,
       )}
     >
       <ConnectWalletDid>
-        <ConnectWalletDidAvatar
-          fallback={<ConnectWalletImage className="size-5 rounded-full" />}
-        />
-        <span className="flex min-w-0 flex-col items-start leading-tight">
-          <ConnectWalletDidName
-            fallback={
-              <ConnectWalletAddress
-                frontChars={10}
-                endChars={6}
-                className="text-xs font-semibold"
-              />
-            }
-          />
-          <span className="flex items-center gap-1.5">
-            <ConnectWalletBalance className="text-[10px] font-normal text-muted-foreground" />
-            <ConnectWalletDidId />
-          </span>
-        </span>
+        <WalletMark className={mark} />
       </ConnectWalletDid>
     </button>
   )

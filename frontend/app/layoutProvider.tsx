@@ -16,8 +16,10 @@ export function LayoutProvider({ children }: { children: ReactNode }) {
   return <ccc.Provider 
     defaultClient={defaultClient}
     clientOptions={[
-      { name: "CKB Testnet", client: new ccc.ClientPublicTestnet() },
-      { name: "CKB Mainnet", client: new ccc.ClientPublicMainnet() },
+      {
+        name: network === "mainnet" ? "CKB Mainnet" : "CKB Testnet",
+        client: defaultClient,
+      },
     ]}
   >
     <ConnectWalletKitProvider
