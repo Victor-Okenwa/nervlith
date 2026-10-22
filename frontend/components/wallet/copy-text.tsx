@@ -39,7 +39,7 @@ export function CopyText({
           })
         }}
       >
-        {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
+        {copied ? <Check className="size-5" /> : <Copy className="size-5" />}
       </button>
     </span>
   )
