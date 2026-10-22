@@ -13,6 +13,7 @@ import { cn } from "cn"
 const links = [
   { href: "/dashboard", key: "dashboard" },
   { href: "/communities", key: "communities" },
+  { href: "/launch", key: "launch" },
   { href: "/identity", key: "identity" },
 ] as const
 

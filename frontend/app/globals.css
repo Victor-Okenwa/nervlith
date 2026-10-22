@@ -108,6 +108,25 @@
   }
 }
 
+@keyframes nervlith-sheen {
+  from {
+    transform: translateX(-45%);
+  }
+  to {
+    transform: translateX(45%);
+  }
+}
+
+.nervlith-sheen {
+  animation: nervlith-sheen 3.6s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nervlith-sheen {
+    animation: none;
+  }
+}
+
 html {
   scroll-behavior: smooth;
 }
