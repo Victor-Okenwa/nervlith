@@ -1,23 +1,17 @@
-import { BuildersSection } from "@/components/home/builders-section"
-import { Hero } from "@/components/home/hero"
-import { IntegrationsSection } from "@/components/home/integrations-section"
-import { ProblemSection } from "@/components/home/problem-section"
-import { ProtocolSection } from "@/components/home/protocol-section"
-import { SiteFooter } from "@/components/home/site-footer"
-import { SiteHeader } from "@/components/home/site-header"
+import { HomeGate } from "@/components/home/home-gate"
+import { MarketingHome } from "@/components/home/marketing-home"
+import { AppShell } from "@/components/shell/app-shell"
+import { DashboardHome } from "@/components/shell/dashboard-home"
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <SiteHeader />
-      <main className="flex-1">
-        <Hero />
-        <ProblemSection />
-        <ProtocolSection />
-        <IntegrationsSection />
-        <BuildersSection />
-      </main>
-      <SiteFooter />
-    </div>
+    <HomeGate
+      marketing={<MarketingHome />}
+      dashboard={
+        <AppShell>
+          <DashboardHome />
+        </AppShell>
+      }
+    />
   )
 }
