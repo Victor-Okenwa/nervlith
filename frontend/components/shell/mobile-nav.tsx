@@ -74,7 +74,7 @@ export function MobileNav({
           id={panelId}
           role="region"
           aria-label={label}
-          className="absolute inset-x-0 top-full z-40 border-b border-border/60 bg-background/95 shadow-[0_16px_40px_color-mix(in_srgb,var(--background)_65%,transparent)] backdrop-blur-md md:hidden"
+          className="absolute inset-x-0 top-full z-40 border-b border-border bg-background md:hidden"
           onClick={(event) => {
             if (event.target instanceof Element && event.target.closest("a")) {
               setOpen(false)
