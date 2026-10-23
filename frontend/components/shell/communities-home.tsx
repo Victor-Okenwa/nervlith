@@ -13,6 +13,7 @@ import {
   type CommunityTab,
 } from "@/components/shell/community-tabs"
 import { formatGateFeeCkb } from "@/lib/ckb/community-data"
+import { listMemberships } from "@/lib/ckb/read-memberships"
 import { listCommunities, type ListedCommunity } from "@/lib/ckb/read-communities"
 
 export function CommunitiesHome({ initialTab }: { initialTab?: string }) {
@@ -22,6 +23,11 @@ export function CommunitiesHome({ initialTab }: { initialTab?: string }) {
   const { client } = ccc.useCcc()
   const [tab, setTab] = useState<CommunityTab>(communityTab(initialTab))
   const [rows, setRows] = useState<ListedCommunity[] | null>(null)
+  const [held, setHeld] = useState<{
+    lockHash: string
+    rows: ListedCommunity[]
+    cards: ListedCommunity[]
+  } | null>(null)
   const [failed, setFailed] = useState(false)
   const [lockHash, setLockHash] = useState<string | null>(null)
 
@@ -45,6 +51,27 @@ export function CommunitiesHome({ initialTab }: { initialTab?: string }) {
   }, [client])
 
   useEffect(() => {
+    if (!rows || !lockHash) return
+    let cancelled = false
+    const requestRows = rows
+    const requestLock = lockHash
+    listMemberships(client, requestLock, requestRows).then(
+      (cards) => {
+        if (!cancelled) setHeld({ lockHash: requestLock, rows: requestRows, cards })
+      },
+      () => {
+        if (!cancelled) {
+          setHeld({ lockHash: requestLock, rows: requestRows, cards: [] })
+          setFailed(true)
+        }
+      },
+    )
+    return () => {
+      cancelled = true
+    }
+  }, [client, lockHash, rows])
+
+  useEffect(() => {
     if (!signer) return
     let cancelled = false
     signer.getRecommendedAddressObj().then(
@@ -66,6 +93,8 @@ export function CommunitiesHome({ initialTab }: { initialTab?: string }) {
   }
 
   const ownerHash = signer ? lockHash : null
+  const cards =
+    ownerHash && held && held.lockHash === ownerHash && held.rows === rows ? held.cards : null
   const created = rows?.filter((community) => community.lockHash === ownerHash) ?? []
   const launch = { href: "/launch", label: t.shell.communitiesLaunch }
   const modelLabel = (community: ListedCommunity) => t.launch.models[community.model]
@@ -100,14 +129,18 @@ export function CommunitiesHome({ initialTab }: { initialTab?: string }) {
             />
           }
           memberships={
-            // Join mints the membership card in Phase 3. This tab stays empty until then.
-            <CommunityRoster
-              communities={[]}
-              modelLabel={modelLabel}
-              empty={t.shell.membershipsEmpty}
-              hint={signer ? t.shell.membershipsHint : undefined}
-              prompt={signer ? undefined : <ConnectPrompt />}
-            />
+            !signer ? (
+              <ConnectPrompt />
+            ) : cards === null ? (
+              <p className="mt-6 text-sm text-muted-foreground">{t.shell.communitiesLoading}</p>
+            ) : (
+              <CommunityRoster
+                communities={cards}
+                modelLabel={modelLabel}
+                empty={t.shell.membershipsEmpty}
+                hint={t.shell.membershipsHint}
+              />
+            )
           }
           created={
             <CommunityRoster

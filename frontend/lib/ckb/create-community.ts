@@ -3,6 +3,11 @@ import {
   encodeCommunity,
   type CommunityDraft,
 } from "@/lib/ckb/community-data"
+import {
+  encodeMembershipAmount,
+  MEMBERSHIP_AMOUNT,
+  membershipXudtArgs,
+} from "@/lib/ckb/membership-xudt"
 import { submitDidTransaction } from "@/lib/ckb/submit-did-transaction"
 
 export class CommunityScriptUnavailable extends Error {
@@ -34,10 +39,14 @@ export async function createCommunity(signer: ccc.Signer, draft: CommunityDraft)
 
   const data = encodeCommunity(draft)
   const lock = (await signer.getRecommendedAddressObj()).script
-  // 200 CKBytes covers the lock and type scripts. Each data byte adds one CKByte.
-  // cellDeps carries the community type script. Creation reads output data, not a witness.
-  // The owner-mode xUDT is minted on join in Phase 3. Its args are the owner lock hash
-  // plus this cell's type id, so the token belongs to this community alone.
+  const xudt = await signer.client.getKnownScript(ccc.KnownScript.XUdt)
+  const membershipData = encodeMembershipAmount(MEMBERSHIP_AMOUNT)
+  // 200 CKBytes covers the community lock and type scripts. Each data byte adds one CKByte.
+  // The membership output's capacity is its occupied size. Both scripts are in cellDeps.
+  // Community creation reads output data. The xUDT mint is owner mode: an input lock hash
+  // matches the first 32 argument bytes, so the mint does not read input_type or output_type.
+  // Output 0 stays the community cell. Its type id is hashed from input 0 and output index 0.
+  // The xUDT args are that owner lock hash, four zero flag bytes, and the type id.
   const capacity = (BigInt(data.length) + BigInt(200)) * BigInt(100_000_000)
   const tx = ccc.Transaction.from({
     cellDeps: [
@@ -56,16 +65,30 @@ export async function createCommunity(signer: ccc.Signer, draft: CommunityDraft)
         },
         capacity,
       },
+      {
+        lock,
+        type: {
+          codeHash: xudt.codeHash,
+          hashType: xudt.hashType,
+          args: `0x${"00".repeat(68)}`,
+        },
+      },
     ],
-    outputsData: [ccc.hexFrom(data)],
+    outputsData: [ccc.hexFrom(data), ccc.hexFrom(membershipData)],
   })
 
+  await tx.addCellDepsOfKnownScripts(signer.client, ccc.KnownScript.XUdt)
   await tx.completeInputsByCapacity(signer)
   const typeId = ccc.hashTypeId(tx.inputs[0], 0)
   tx.outputs[0].type = ccc.Script.from({
     codeHash: deployment.codeHash,
     hashType: deployment.hashType,
     args: typeId,
+  })
+  tx.outputs[1].type = ccc.Script.from({
+    codeHash: xudt.codeHash,
+    hashType: xudt.hashType,
+    args: membershipXudtArgs(lock.hash(), typeId),
   })
   const txHash = await submitDidTransaction(signer, tx)
   return { txHash }

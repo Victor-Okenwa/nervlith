@@ -34,7 +34,8 @@ const en = {
     createdEmpty: "You have not launched a community from this wallet.",
     createdPending: "A launch you just sent can take a moment to show up.",
     membershipsEmpty: "You have no membership cards yet.",
-    membershipsHint: "A card appears here after you join a community.",
+    membershipsHint:
+      "Launching a community mints this wallet's membership card. It can take a moment to show up.",
   },
   launch: {
     eyebrow: "Community",
@@ -92,6 +93,7 @@ const en = {
     back: "Back",
     continue: "Continue",
     reviewTitle: "Review",
+    membershipNote: "This launch mints your membership card to this wallet.",
     launchAction: "Launch community",
     pending: "Waiting for the wallet…",
     failed: "The transaction did not send.",
@@ -279,7 +281,7 @@ const zh: Messages = {
     createdEmpty: "这个钱包还没有启动过社区。",
     createdPending: "刚刚发出的启动交易可能需要一点时间才会出现。",
     membershipsEmpty: "你还没有成员卡。",
-    membershipsHint: "加入社区之后，成员卡会出现在这里。",
+    membershipsHint: "启动社区时，会把成员卡铸给这个钱包。它可能需要一点时间才会出现。",
   },
   launch: {
     eyebrow: "社区",
@@ -337,6 +339,7 @@ const zh: Messages = {
     back: "返回",
     continue: "继续",
     reviewTitle: "确认",
+    membershipNote: "这次启动会把你的成员卡铸给这个钱包。",
     launchAction: "启动社区",
     pending: "等待钱包确认…",
     failed: "交易没有发出。",

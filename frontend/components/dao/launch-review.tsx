@@ -69,6 +69,7 @@ export function LaunchReview({ draft }: { draft: CommunityDraft }) {
           <dd>{t.launch.models[draft.model]}</dd>
         </div>
       </dl>
+      <p className="max-w-sm text-sm text-muted-foreground">{t.launch.membershipNote}</p>
       {ready ? null : <p className="text-sm text-muted-foreground">{t.launch.scriptPending}</p>}
       {error === "script" ? <p className="text-sm text-destructive">{t.launch.scriptPending}</p> : null}
       {error === "failed" ? <p className="text-sm text-destructive">{t.launch.failed}</p> : null}

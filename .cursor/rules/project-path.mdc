@@ -14,7 +14,7 @@ Identity is DID:CKB through `@ckb-ccc/did-ckb`. Contracts are `no_std` Rust on `
 Mark a phase done by changing its box from `[ ]` to `[x]`. Do that only when every item in the phase is shipped. Leave the others as they are.
 
 - [x] Phase 1 — Identity and shell (MVP)
-- [ ] Phase 2 — Community creation and membership (MVP)
+- [x] Phase 2 — Community creation and membership (MVP)
 - [ ] Phase 3 — Token-gated access (MVP)
 - [ ] Phase 4 — Governance (later)
 - [ ] Reputation (later)
