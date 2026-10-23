@@ -61,7 +61,7 @@ export function MembershipCard({
   return (
     <div
       className={cn(
-        "group w-full max-w-64 rounded-2xl outline-none",
+        "group w-full max-w-sm rounded-2xl outline-none",
         flippable && "focus-visible:ring-2 focus-visible:ring-ring",
         className,
       )}
@@ -75,7 +75,7 @@ export function MembershipCard({
       <div className="perspective-distant">
         <div
           className={cn(
-            "relative aspect-[54/86] transform-3d transition-transform duration-700 ease-out motion-reduce:transition-none",
+            "relative aspect-[86/54] transform-3d transition-transform duration-700 ease-out motion-reduce:transition-none",
             flippable && "group-hover:rotate-y-180 group-focus-visible:rotate-y-180",
             flipped && "rotate-y-180",
           )}
@@ -137,9 +137,7 @@ export function MembershipCard({
               <p className="text-[10px] tracking-[0.22em] text-primary uppercase">
                 {t.launch.descriptionLabel}
               </p>
-              <p className="mt-3 min-h-0 flex-1 overflow-y-auto text-sm leading-relaxed whitespace-pre-wrap">
-                {back}
-              </p>
+              <p className="mt-3 text-sm leading-relaxed break-words whitespace-pre-wrap">{back}</p>
             </div>
           </div>
         ) : null}

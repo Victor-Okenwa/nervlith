@@ -9,7 +9,7 @@ The product name is Nervlith. Its formal name is Mint Gate. On introductions —
 
 Tagline: Build · Govern · Belong. A CKB-native DAO launcher that replaces a centralized forum with cells the chain can verify.
 
-A community is a gate fee plus a governance model. Paying the fee mints a membership card. The card is rendered in the browser from on-chain metadata. It is not an image stored on a server.
+A community is a gate fee plus a governance model. Paying the fee mints a membership card. The card is rendered in the browser from on-chain metadata. It is not an image stored on a server. A membership card and a community card are different objects. Follow the cards rule.
 
 Identity is DID:CKB via `@ckb-ccc/did-ckb` (create, resolve, profile, rotate, deactivate, migrate from did:plc). That DID is the passport across communities.
 

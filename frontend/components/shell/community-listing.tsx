@@ -39,10 +39,10 @@ export function CommunityListing({
   }
 
   return (
-    <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+    <ul className="mt-6 grid grid-cols-[repeat(auto-fill,minmax(11rem,13rem))] items-start justify-start gap-4">
       {communities.map((community) => (
-        <li key={community.outPoint}>
-          <article className="flex aspect-[3/4] flex-col rounded-2xl border border-border bg-card p-4 sm:p-5">
+        <li key={community.outPoint} className="min-w-0 self-start">
+          <article className="flex aspect-[3/4] h-auto min-h-0 w-full flex-col self-start overflow-hidden rounded-2xl border border-border bg-card p-4">
             <h2 className="line-clamp-2 font-display text-lg font-semibold sm:text-xl">
               {community.name}
             </h2>
@@ -50,7 +50,7 @@ export function CommunityListing({
               {modelLabel(community)}
             </p>
             {community.description ? (
-              <p className="mt-4 text-sm text-muted-foreground">
+              <p className="mt-4 line-clamp-4 text-sm text-muted-foreground">
                 {previewCommunityDescription(community.description)}
               </p>
             ) : null}

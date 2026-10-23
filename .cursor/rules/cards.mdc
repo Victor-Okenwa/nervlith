@@ -1,0 +1,19 @@
+---
+description: Membership cards and community cards are different objects
+alwaysApply: true
+---
+
+# Cards
+
+These names are not interchangeable.
+
+- **Membership card** (also community membership card): the card minted when a person joins a community. It is `MembershipCard`. It stays landscape (`aspect-[86/54]`). The description is the back face, shown on hover. Show the full description. Do not preview it, line-clamp it, or cut it with an ellipsis.
+- **Community card**: the card on the Communities tab. It is the article in `CommunityListing`. It is portrait. Its height comes from its own width, not from the leftover height of the page or the tab panel.
+
+```tsx
+// BAD — portrait membership card, description clipped
+<MembershipCard className="aspect-[54/86]" description={previewCommunityDescription(text)} />
+
+// GOOD — landscape membership card, full description on the back
+<MembershipCard description={community.description} />
+```

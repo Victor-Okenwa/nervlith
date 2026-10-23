@@ -18,7 +18,7 @@ export function LaunchCard({
   const fee = parseGateFeeShannons(draft.gateFeeCkb)
 
   return (
-    <div className="grid items-start gap-6 md:grid-cols-[16rem_minmax(0,1fr)]">
+    <div className="grid items-start gap-6 md:grid-cols-[24rem_minmax(0,1fr)]">
       <MembershipCard
         name={draft.name.trim()}
         description={draft.description}

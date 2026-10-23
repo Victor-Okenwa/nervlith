@@ -38,7 +38,7 @@ export function CommunityRoster({
   }
 
   return (
-    <ul className="mt-6 grid grid-cols-[repeat(auto-fill,minmax(14rem,16rem))] gap-4">
+    <ul className="mt-6 grid grid-cols-[repeat(auto-fill,minmax(20rem,24rem))] items-start justify-start gap-4">
       {communities.map((community) => (
         <li key={community.outPoint}>
           <MembershipCard
