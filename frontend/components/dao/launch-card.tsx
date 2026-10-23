@@ -21,6 +21,7 @@ export function LaunchCard({
     <div className="grid items-start gap-6 md:grid-cols-[16rem_minmax(0,1fr)]">
       <MembershipCard
         name={draft.name.trim()}
+        description={draft.description}
         fee={fee === null ? "—" : formatGateFeeCkb(fee)}
         model={t.launch.models[draft.model]}
         pattern={draft.pattern}

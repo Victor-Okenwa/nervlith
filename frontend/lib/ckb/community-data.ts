@@ -8,6 +8,7 @@ export const MIN_GATE_FEE_CKB = 200
 export const MIN_GATE_FEE_SHANNONS = BigInt(MIN_GATE_FEE_CKB) * BigInt(100_000_000)
 export const COMMUNITY_NAME_MAX = 32
 export const COMMUNITY_DESCRIPTION_MAX = 160
+export const COMMUNITY_DESCRIPTION_PREVIEW = 100
 
 export const GOVERNANCE_MODELS = ["autocracy", "democracy", "legislative"] as const
 export const LIVE_GOVERNANCE_MODELS = ["autocracy"] as const
@@ -81,6 +82,12 @@ export function communityDescriptionOk(description: string) {
   const trimmed = description.trim()
   const length = [...trimmed].length
   return length <= COMMUNITY_DESCRIPTION_MAX && !/[\u0000-\u001f]/.test(trimmed)
+}
+
+export function previewCommunityDescription(description: string) {
+  const chars = [...description]
+  if (chars.length <= COMMUNITY_DESCRIPTION_PREVIEW) return description
+  return `${chars.slice(0, COMMUNITY_DESCRIPTION_PREVIEW).join("")}…`
 }
 
 export function gateFeeOk(input: string) {

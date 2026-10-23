@@ -38,20 +38,18 @@ export function CommunityRoster({
   }
 
   return (
-    <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+    <ul className="mt-6 grid grid-cols-[repeat(auto-fill,minmax(14rem,16rem))] gap-4">
       {communities.map((community) => (
         <li key={community.outPoint}>
           <MembershipCard
             name={community.name}
+            description={community.description}
             fee={formatGateFeeCkb(community.gateFeeShannons)}
             model={modelLabel(community)}
             pattern={community.pattern}
             art={community.art}
             holographic={community.holographic}
           />
-          {community.description ? (
-            <p className="mt-3 line-clamp-3 text-sm text-muted-foreground">{community.description}</p>
-          ) : null}
         </li>
       ))}
     </ul>

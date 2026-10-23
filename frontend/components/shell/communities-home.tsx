@@ -5,12 +5,14 @@ import { useRouter } from "next/navigation"
 import { ccc } from "@ckb-ccc/connector-react"
 import { useLanguage } from "@/components/language/language-provider"
 import { ConnectPrompt } from "@/components/identity/connect-prompt"
+import { CommunityListing } from "@/components/shell/community-listing"
 import { CommunityRoster } from "@/components/shell/community-roster"
 import {
   CommunityTabs,
   communityTab,
   type CommunityTab,
 } from "@/components/shell/community-tabs"
+import { formatGateFeeCkb } from "@/lib/ckb/community-data"
 import { listCommunities, type ListedCommunity } from "@/lib/ckb/read-communities"
 
 export function CommunitiesHome({ initialTab }: { initialTab?: string }) {
@@ -67,6 +69,7 @@ export function CommunitiesHome({ initialTab }: { initialTab?: string }) {
   const created = rows?.filter((community) => community.lockHash === ownerHash) ?? []
   const launch = { href: "/launch", label: t.shell.communitiesLaunch }
   const modelLabel = (community: ListedCommunity) => t.launch.models[community.model]
+  const feeLabel = (community: ListedCommunity) => formatGateFeeCkb(community.gateFeeShannons)
 
   return (
     <div className="max-w-3xl">
@@ -88,9 +91,10 @@ export function CommunitiesHome({ initialTab }: { initialTab?: string }) {
             created: t.shell.tabCreated,
           }}
           communities={
-            <CommunityRoster
+            <CommunityListing
               communities={rows}
               modelLabel={modelLabel}
+              feeLabel={feeLabel}
               empty={t.shell.communitiesEmpty}
               action={launch}
             />

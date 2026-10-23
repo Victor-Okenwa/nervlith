@@ -47,8 +47,8 @@ export function LaunchReview({ draft }: { draft: CommunityDraft }) {
     <div className="space-y-5">
       <h2 className="font-display text-xl font-semibold">{t.launch.reviewTitle}</h2>
       <MembershipCard
-        className="max-w-sm"
         name={draft.name.trim()}
+        description={draft.description}
         fee={fee === null ? "—" : formatGateFeeCkb(fee)}
         model={t.launch.models[draft.model]}
         pattern={draft.pattern}
@@ -60,12 +60,6 @@ export function LaunchReview({ draft }: { draft: CommunityDraft }) {
           <dt className="text-muted-foreground">{t.launch.nameLabel}</dt>
           <dd className="truncate">{draft.name.trim()}</dd>
         </div>
-        {draft.description.trim() ? (
-          <div className="space-y-1">
-            <dt className="text-muted-foreground">{t.launch.descriptionLabel}</dt>
-            <dd className="whitespace-pre-wrap">{draft.description.trim()}</dd>
-          </div>
-        ) : null}
         <div className="flex justify-between gap-4">
           <dt className="text-muted-foreground">{t.launch.feeLabel}</dt>
           <dd>{fee === null ? "—" : `${formatGateFeeCkb(fee)} CKB`}</dd>
