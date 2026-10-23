@@ -1,9 +1,9 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { ccc } from "@ckb-ccc/connector-react"
 import { useLanguage } from "@/components/language/language-provider"
-import { TxNotice } from "@/components/identity/tx-notice"
 import { MembershipCard } from "@/components/membership/membership-card"
 import { Button } from "@/components/ui/button"
 import {
@@ -22,11 +22,11 @@ const actionClass =
 
 export function LaunchReview({ draft }: { draft: CommunityDraft }) {
   const { t } = useLanguage()
+  const router = useRouter()
   const signer = ccc.useSigner()
   const ready = communityScriptReady()
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<"script" | "failed" | null>(null)
-  const [txHash, setTxHash] = useState<string | null>(null)
   const fee = parseGateFeeShannons(draft.gateFeeCkb)
 
   async function onLaunch() {
@@ -34,11 +34,10 @@ export function LaunchReview({ draft }: { draft: CommunityDraft }) {
     setPending(true)
     setError(null)
     try {
-      const result = await createCommunity(signer, draft)
-      setTxHash(result.txHash)
+      await createCommunity(signer, draft)
+      router.push("/communities?tab=created")
     } catch (caught) {
       setError(caught instanceof CommunityScriptUnavailable ? "script" : "failed")
-    } finally {
       setPending(false)
     }
   }
@@ -72,7 +71,6 @@ export function LaunchReview({ draft }: { draft: CommunityDraft }) {
       {ready ? null : <p className="text-sm text-muted-foreground">{t.launch.scriptPending}</p>}
       {error === "script" ? <p className="text-sm text-destructive">{t.launch.scriptPending}</p> : null}
       {error === "failed" ? <p className="text-sm text-destructive">{t.launch.failed}</p> : null}
-      <TxNotice label={t.launch.sent} txHash={txHash} />
       <Button
         type="button"
         className={actionClass}

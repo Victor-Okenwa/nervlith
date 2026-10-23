@@ -1,5 +1,5 @@
 // Molecule table Community, field order fixed for the Phase 2 type script:
-// name: Bytes, gate_fee: Uint64 (shannons), model: byte, pattern: byte,
+// name: Bytes (vector header is the byte count), gate_fee: Uint64 (shannons), model: byte, pattern: byte,
 // art: byte, holographic: byte.
 // Offsets are from the start of the table, including the 4-byte header.
 
@@ -155,7 +155,7 @@ function concat(parts: Uint8Array[]) {
 }
 
 function molBytes(raw: Uint8Array) {
-  return concat([u32le(4 + raw.length), raw])
+  return concat([u32le(raw.length), raw])
 }
 
 function molTable(fields: Uint8Array[]) {
@@ -183,7 +183,7 @@ function readTable(bytes: Uint8Array, count: number) {
 }
 
 function readBytes(field: Uint8Array) {
-  const size = readU32(field, 0)
-  if (size !== field.length || size < 4) throw new Error("bad bytes")
+  const count = readU32(field, 0)
+  if (count + 4 !== field.length) throw new Error("bad bytes")
   return field.slice(4)
 }

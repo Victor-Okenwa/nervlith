@@ -1,0 +1,20 @@
+// Community cell data. Field order and widths match
+// frontend/lib/ckb/community-data.ts. Each Uint8 is one byte on the wire.
+//
+// model: 0 autocracy, 1 democracy, 2 legislative
+// pattern: 0 signal, 1 mesh, 2 crest, 3 splats, 4 top, 5 bottom, 6 left, 7 right
+// art: 0 ember, 1 alloy, 2 void
+// holographic: 0 none, 1 sheen, 2 prism
+
+vector Bytes <byte>;
+array Uint8 [byte; 1];
+array Uint64 [byte; 8];
+
+table Community {
+    name: Bytes,
+    gate_fee: Uint64,
+    model: Uint8,
+    pattern: Uint8,
+    art: Uint8,
+    holographic: Uint8,
+}

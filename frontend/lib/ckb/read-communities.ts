@@ -3,6 +3,7 @@ import { decodeCommunity, type CommunityRecord } from "@/lib/ckb/community-data"
 
 export type ListedCommunity = CommunityRecord & {
   outPoint: string
+  lockHash: string
 }
 
 const PAGE = 20
@@ -32,6 +33,7 @@ export async function listCommunities(client: ccc.Client): Promise<ListedCommuni
     found.push({
       ...record,
       outPoint: `${cell.outPoint.txHash}:${cell.outPoint.index}`,
+      lockHash: ccc.Script.from(cell.cellOutput.lock).hash(),
     })
     if (found.length >= LIMIT) break
   }
