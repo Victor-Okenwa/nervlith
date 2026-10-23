@@ -1,11 +1,13 @@
 // Molecule table Community, field order fixed for the Phase 2 type script:
 // name: Bytes (vector header is the byte count), gate_fee: Uint64 (shannons), model: byte, pattern: byte,
-// art: byte, holographic: byte.
+// art: byte, holographic: byte, description: Bytes.
+// A cell written before description existed has six fields. Readers treat that as an empty description.
 // Offsets are from the start of the table, including the 4-byte header.
 
 export const MIN_GATE_FEE_CKB = 200
 export const MIN_GATE_FEE_SHANNONS = BigInt(MIN_GATE_FEE_CKB) * BigInt(100_000_000)
 export const COMMUNITY_NAME_MAX = 32
+export const COMMUNITY_DESCRIPTION_MAX = 160
 
 export const GOVERNANCE_MODELS = ["autocracy", "democracy", "legislative"] as const
 export const LIVE_GOVERNANCE_MODELS = ["autocracy"] as const
@@ -33,6 +35,7 @@ export type CardHolo = (typeof CARD_HOLOS)[number]
 
 export type CommunityDraft = {
   name: string
+  description: string
   gateFeeCkb: string
   model: GovernanceModel
   pattern: CardPattern
@@ -42,6 +45,7 @@ export type CommunityDraft = {
 
 export type CommunityRecord = {
   name: string
+  description: string
   gateFeeShannons: bigint
   model: GovernanceModel
   pattern: CardPattern
@@ -73,6 +77,12 @@ export function communityNameOk(name: string) {
   return length >= 1 && length <= COMMUNITY_NAME_MAX && !/[\u0000-\u001f]/.test(trimmed)
 }
 
+export function communityDescriptionOk(description: string) {
+  const trimmed = description.trim()
+  const length = [...trimmed].length
+  return length <= COMMUNITY_DESCRIPTION_MAX && !/[\u0000-\u001f]/.test(trimmed)
+}
+
 export function gateFeeOk(input: string) {
   const fee = parseGateFeeShannons(input)
   return fee !== null && fee >= MIN_GATE_FEE_SHANNONS
@@ -80,8 +90,14 @@ export function gateFeeOk(input: string) {
 
 export function encodeCommunity(draft: CommunityDraft): Uint8Array {
   const name = draft.name.trim()
+  const description = draft.description.trim()
   const fee = parseGateFeeShannons(draft.gateFeeCkb)
-  if (!communityNameOk(name) || fee === null || !gateFeeOk(draft.gateFeeCkb)) {
+  if (
+    !communityNameOk(name) ||
+    !communityDescriptionOk(description) ||
+    fee === null ||
+    !gateFeeOk(draft.gateFeeCkb)
+  ) {
     throw new Error("INVALID_COMMUNITY")
   }
   return molTable([
@@ -91,12 +107,13 @@ export function encodeCommunity(draft: CommunityDraft): Uint8Array {
     new Uint8Array([CARD_PATTERNS.indexOf(draft.pattern)]),
     new Uint8Array([CARD_ARTS.indexOf(draft.art)]),
     new Uint8Array([CARD_HOLOS.indexOf(draft.holographic)]),
+    molBytes(new TextEncoder().encode(description)),
   ])
 }
 
 export function decodeCommunity(data: Uint8Array): CommunityRecord | null {
   try {
-    const fields = readTable(data, 6)
+    const fields = readTable(data)
     const nameBytes = readBytes(fields[0])
     const name = new TextDecoder("utf-8", { fatal: true }).decode(nameBytes)
     if (!communityNameOk(name)) return null
@@ -109,10 +126,18 @@ export function decodeCommunity(data: Uint8Array): CommunityRecord | null {
     if (!model || !pattern || !art || !holographic) return null
     if (fields[2].length !== 1 || fields[3].length !== 1) return null
     if (fields[4].length !== 1 || fields[5].length !== 1) return null
-    return { name, gateFeeShannons, model, pattern, art, holographic }
+    const description = fields.length === 7 ? readDescription(fields[6]) : ""
+    if (description === null) return null
+    return { name, description, gateFeeShannons, model, pattern, art, holographic }
   } catch {
     return null
   }
+}
+
+function readDescription(field: Uint8Array): string | null {
+  const text = new TextDecoder("utf-8", { fatal: true }).decode(readBytes(field))
+  if (!communityDescriptionOk(text)) return null
+  return text.trim()
 }
 
 function u32le(value: number) {
@@ -169,9 +194,13 @@ function molTable(fields: Uint8Array[]) {
   return concat([u32le(cursor), ...offsets, ...fields])
 }
 
-function readTable(bytes: Uint8Array, count: number) {
+function readTable(bytes: Uint8Array) {
   const total = readU32(bytes, 0)
-  if (total !== bytes.length) throw new Error("bad table")
+  if (total !== bytes.length || bytes.length < 8) throw new Error("bad table")
+  const first = readU32(bytes, 4)
+  if (first % 4 !== 0 || first < 8 || first > total) throw new Error("bad offset")
+  const count = first / 4 - 1
+  if (count !== 6 && count !== 7) throw new Error("bad field count")
   const fields: Uint8Array[] = []
   for (let index = 0; index < count; index += 1) {
     const start = readU32(bytes, 4 + index * 4)

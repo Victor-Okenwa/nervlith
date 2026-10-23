@@ -5,6 +5,7 @@ import Link from "next/link"
 import { ccc } from "@ckb-ccc/connector-react"
 import { useLanguage } from "@/components/language/language-provider"
 import { LaunchCard } from "@/components/dao/launch-card"
+import { LaunchDescription } from "@/components/dao/launch-description"
 import { LaunchName } from "@/components/dao/launch-name"
 import { LaunchReview } from "@/components/dao/launch-review"
 import { LaunchTerms } from "@/components/dao/launch-terms"
@@ -13,6 +14,7 @@ import { useOwnedDid } from "@/components/identity/use-owned-did"
 import { Button } from "@/components/ui/button"
 import { cn } from "cn"
 import {
+  communityDescriptionOk,
   communityNameOk,
   gateFeeOk,
   type CommunityDraft,
@@ -27,6 +29,7 @@ export function LaunchWizard() {
   const [step, setStep] = useState(0)
   const [draft, setDraft] = useState<CommunityDraft>({
     name: "",
+    description: "",
     gateFeeCkb: "200",
     model: "autocracy",
     pattern: "signal",
@@ -35,7 +38,7 @@ export function LaunchWizard() {
   })
 
   const canContinue =
-    (step === 0 && communityNameOk(draft.name)) ||
+    (step === 0 && communityNameOk(draft.name) && communityDescriptionOk(draft.description)) ||
     (step === 1 && gateFeeOk(draft.gateFeeCkb)) ||
     step === 2
 
@@ -73,7 +76,13 @@ export function LaunchWizard() {
         ))}
       </ol>
       {step === 0 ? (
-        <LaunchName name={draft.name} onChange={(name) => setDraft({ ...draft, name })} />
+        <div className="max-w-xl space-y-5">
+          <LaunchName name={draft.name} onChange={(name) => setDraft({ ...draft, name })} />
+          <LaunchDescription
+            description={draft.description}
+            onChange={(description) => setDraft({ ...draft, description })}
+          />
+        </div>
       ) : null}
       {step === 1 ? (
         <LaunchTerms

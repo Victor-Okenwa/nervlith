@@ -17,4 +17,5 @@ table Community {
     pattern: Uint8,
     art: Uint8,
     holographic: Uint8,
+    description: Bytes,
 }

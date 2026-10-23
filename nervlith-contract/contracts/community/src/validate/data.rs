@@ -1,6 +1,7 @@
 use crate::error::Error;
 use crate::generated::Community;
 use crate::validate::card::validate_card;
+use crate::validate::description::validate_description;
 use crate::validate::gate_fee::validate_gate_fee;
 use crate::validate::governance::validate_model;
 use crate::validate::name::validate_name;
@@ -20,5 +21,7 @@ pub fn validate_data(data: &[u8]) -> Result<(), Error> {
         community.art().as_slice(),
         community.holographic().as_slice(),
     )?;
+    let description = community.description().raw_data();
+    validate_description(description.as_ref())?;
     Ok(())
 }

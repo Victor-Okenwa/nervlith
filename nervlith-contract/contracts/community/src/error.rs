@@ -20,6 +20,8 @@ pub enum Error {
     InvalidHolographic = 10,
     // The type args are not this cell's type id, or the group is not one cell.
     InvalidTypeId = 11,
+    // The description is longer than 160 scalars, or it is not plain text.
+    InvalidDescription = 12,
 }
 
 impl From<SysError> for Error {

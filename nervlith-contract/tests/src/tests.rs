@@ -22,10 +22,24 @@ const INVALID_PATTERN: i8 = 8;
 const INVALID_ART: i8 = 9;
 const INVALID_HOLOGRAPHIC: i8 = 10;
 const INVALID_TYPE_ID: i8 = 11;
+const INVALID_DESCRIPTION: i8 = 12;
 
-const SIGNAL_HALL: &str = "370000001c0000002b000000330000003400000035000000360000000b0000005369676e616c2048616c6c00c817a80400000000000000";
+const SIGNAL_HALL: &str = "3f000000200000002f0000003700000038000000390000003a0000003b0000000b0000005369676e616c2048616c6c00c817a8040000000000000000000000";
+const SIGNAL_HALL_WITHOUT_DESCRIPTION: &str = "370000001c0000002b000000330000003400000035000000360000000b0000005369676e616c2048616c6c00c817a80400000000000000";
 
 fn encode(name: &[u8], fee: u64, model: u8, pattern: u8, art: u8, holographic: u8) -> Bytes {
+    encode_with(name, fee, model, pattern, art, holographic, b"")
+}
+
+fn encode_with(
+    name: &[u8],
+    fee: u64,
+    model: u8,
+    pattern: u8,
+    art: u8,
+    holographic: u8,
+    description: &[u8],
+) -> Bytes {
     let fields = [
         mol_bytes(name),
         fee.to_le_bytes().to_vec(),
@@ -33,6 +47,7 @@ fn encode(name: &[u8], fee: u64, model: u8, pattern: u8, art: u8, holographic: u
         vec![pattern],
         vec![art],
         vec![holographic],
+        mol_bytes(description),
     ];
     mol_table(&fields).into()
 }
@@ -172,6 +187,40 @@ fn signal_hall_matches_the_wizard_bytes() {
 fn create_accepts_the_wizard_fixture() {
     let data = unhex(SIGNAL_HALL);
     create_with_id(data).expect("signal hall");
+}
+
+#[test]
+fn create_stores_a_description() {
+    let data = encode_with(b"Signal Hall", MIN_FEE, 0, 0, 0, 0, "A hall for signals.".as_bytes());
+    create_with_id(data).expect("description");
+}
+
+#[test]
+fn create_accepts_a_160_scalar_description() {
+    let description = "社".repeat(160);
+    let data = encode_with(b"Signal Hall", MIN_FEE, 0, 0, 0, 0, description.as_bytes());
+    create_with_id(data).expect("160 scalars");
+}
+
+#[test]
+fn rejects_a_161_scalar_description() {
+    let description = "社".repeat(161);
+    let data = encode_with(b"Signal Hall", MIN_FEE, 0, 0, 0, 0, description.as_bytes());
+    assert_code(create_with_id(data), INVALID_DESCRIPTION);
+}
+
+#[test]
+fn rejects_a_control_character_in_the_description() {
+    let data = encode_with(b"Signal Hall", MIN_FEE, 0, 0, 0, 0, b"bad\ntext");
+    assert_code(create_with_id(data), INVALID_DESCRIPTION);
+}
+
+#[test]
+fn rejects_a_cell_without_a_description_field() {
+    assert_code(
+        create_with_id(unhex(SIGNAL_HALL_WITHOUT_DESCRIPTION)),
+        ENCODING,
+    );
 }
 
 #[test]

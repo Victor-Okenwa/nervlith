@@ -49,6 +49,9 @@ export function CommunityRoster({
             art={community.art}
             holographic={community.holographic}
           />
+          {community.description ? (
+            <p className="mt-3 line-clamp-3 text-sm text-muted-foreground">{community.description}</p>
+          ) : null}
         </li>
       ))}
     </ul>

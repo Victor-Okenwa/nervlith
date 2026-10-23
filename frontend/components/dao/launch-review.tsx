@@ -12,6 +12,7 @@ import {
   createCommunity,
 } from "@/lib/ckb/create-community"
 import {
+  communityDescriptionOk,
   formatGateFeeCkb,
   parseGateFeeShannons,
   type CommunityDraft,
@@ -59,6 +60,12 @@ export function LaunchReview({ draft }: { draft: CommunityDraft }) {
           <dt className="text-muted-foreground">{t.launch.nameLabel}</dt>
           <dd className="truncate">{draft.name.trim()}</dd>
         </div>
+        {draft.description.trim() ? (
+          <div className="space-y-1">
+            <dt className="text-muted-foreground">{t.launch.descriptionLabel}</dt>
+            <dd className="whitespace-pre-wrap">{draft.description.trim()}</dd>
+          </div>
+        ) : null}
         <div className="flex justify-between gap-4">
           <dt className="text-muted-foreground">{t.launch.feeLabel}</dt>
           <dd>{fee === null ? "—" : `${formatGateFeeCkb(fee)} CKB`}</dd>
@@ -74,7 +81,9 @@ export function LaunchReview({ draft }: { draft: CommunityDraft }) {
       <Button
         type="button"
         className={actionClass}
-        disabled={!ready || pending || !signer || fee === null}
+        disabled={
+          !ready || pending || !signer || fee === null || !communityDescriptionOk(draft.description)
+        }
         onClick={() => {
           void onLaunch()
         }}
