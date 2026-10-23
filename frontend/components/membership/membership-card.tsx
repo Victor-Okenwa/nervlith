@@ -117,7 +117,12 @@ export function MembershipCard({
             />
           ) : null}
           <div className="relative flex h-full flex-col justify-between p-4">
-            <p className="text-[10px] tracking-[0.22em] text-primary uppercase">Nervlith</p>
+            <div className="flex items-start justify-between gap-2">
+              <p className="text-[10px] tracking-[0.22em] text-primary uppercase">Nervlith</p>
+              <span className="shrink-0 rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold tracking-[0.14em] text-primary-foreground">
+                NFT
+              </span>
+            </div>
             <div className="min-w-0">
               <p className="truncate font-display text-xl font-semibold">{name || "—"}</p>
               <p className="mt-1 truncate text-xs text-muted-foreground">

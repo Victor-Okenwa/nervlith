@@ -1,6 +1,7 @@
 import type { ReactNode } from "react"
 import Link from "next/link"
 import { MembershipCard } from "@/components/membership/membership-card"
+import { cn } from "cn"
 import { formatGateFeeCkb } from "@/lib/ckb/community-data"
 import type { ListedCommunity } from "@/lib/ckb/read-communities"
 
@@ -11,6 +12,7 @@ export function CommunityRoster({
   hint,
   action,
   prompt,
+  row = false,
 }: {
   communities: ListedCommunity[]
   modelLabel: (community: ListedCommunity) => string
@@ -18,6 +20,7 @@ export function CommunityRoster({
   hint?: string
   action?: { href: string; label: string }
   prompt?: ReactNode
+  row?: boolean
 }) {
   if (prompt) return prompt
   if (communities.length === 0) {
@@ -38,9 +41,16 @@ export function CommunityRoster({
   }
 
   return (
-    <ul className="mt-6 grid grid-cols-[repeat(auto-fill,minmax(20rem,24rem))] items-start justify-start gap-4">
+    <ul
+      className={cn(
+        "mt-6 items-start gap-4",
+        row
+          ? "flex flex-row flex-wrap"
+          : "grid grid-cols-[repeat(auto-fill,minmax(20rem,24rem))] justify-start",
+      )}
+    >
       {communities.map((community) => (
-        <li key={community.outPoint}>
+        <li key={community.outPoint} className={row ? "w-[min(100%,22rem)] shrink-0" : undefined}>
           <MembershipCard
             name={community.name}
             description={community.description}

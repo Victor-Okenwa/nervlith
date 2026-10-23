@@ -111,6 +111,7 @@ export function CommunitiesHome({ initialTab }: { initialTab?: string }) {
           }
           created={
             <CommunityRoster
+              row
               communities={ownerHash ? created : []}
               modelLabel={modelLabel}
               empty={t.shell.createdEmpty}

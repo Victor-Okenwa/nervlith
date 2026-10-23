@@ -39,7 +39,7 @@ export function CommunityListing({
   }
 
   return (
-    <ul className="mt-6 grid grid-cols-[repeat(auto-fill,minmax(11rem,13rem))] items-start justify-start gap-4">
+    <ul className="mt-6 grid grid-cols-[repeat(auto-fill,minmax(11rem,14rem))] items-start justify-start gap-4">
       {communities.map((community) => (
         <li key={community.outPoint} className="min-w-0 self-start">
           <article className="flex aspect-[3/4] h-auto min-h-0 w-full flex-col self-start overflow-hidden rounded-2xl border border-border bg-card p-4">
